@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "295020971675",
+    "firebase_url": "https://saxopia-push-project.firebaseio.com",
+    "project_id": "saxopia-push-project",
+    "storage_bucket": "saxopia-push-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:295020971675:android:3d0e906133483d0c",
+        "android_client_info": {
+          "package_name": "com.saxophone.saxopia.community"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "295020971675-1dsjvalladaqutafaespsrar5gqavb34.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcFCXAL1T7ETg8GBIAELVbVib4Op8oxwI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

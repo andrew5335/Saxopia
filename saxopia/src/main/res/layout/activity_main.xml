@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.saxophone.saxopia.community.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <WebView
+            android:id="@+id/webview_"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+        </WebView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="0dp"
+        android:background="@mipmap/bg"
+        android:gravity="bottom|fill"
+        android:padding="0dp">
+
+        <ImageButton
+            android:id="@+id/btn_nav001"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@mipmap/btn001"
+            android:onClick="onNav001Clicked"
+            android:scaleType="fitXY"
+            android:src="@mipmap/btn001" />
+
+        <ImageButton
+            android:id="@+id/btn_nav002"
+            android:layout_width="51dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@mipmap/btn002"
+            android:onClick="onNav002Clicked"
+            android:scaleType="fitXY"
+            android:src="@mipmap/btn002" />
+
+        <ImageButton
+            android:id="@+id/btn_nav003"
+            android:layout_width="51dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@mipmap/btn003"
+            android:onClick="onNav003Clicked"
+            android:scaleType="fitXY"
+            android:src="@mipmap/btn003" />
+
+        <ImageButton
+            android:id="@+id/btn_nav004"
+            android:layout_width="51dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@mipmap/btn004"
+            android:onClick="onNav004Clicked"
+            android:scaleType="fitXY"
+            android:src="@mipmap/btn004" />
+
+        <ImageButton
+            android:id="@+id/btn_nav005"
+            android:layout_width="51dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@mipmap/btn005"
+            android:onClick="onNav005Clicked"
+            android:scaleType="fitXY"
+            android:src="@mipmap/btn005" />
+
+        <ImageButton
+            android:id="@+id/btn_nav006"
+            android:layout_width="51dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@mipmap/btn006"
+            android:onClick="onNav006Clicked"
+            android:scaleType="fitXY"
+            android:src="@mipmap/btn006" />
+
+        <ImageButton
+            android:id="@+id/btn_nav007"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@mipmap/btn007"
+            android:onClick="onNav007Clicked"
+            android:scaleType="fitXY"
+            android:src="@mipmap/btn007" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/customViewContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/background_dark"
+        android:visibility="gone" />
+</RelativeLayout>
