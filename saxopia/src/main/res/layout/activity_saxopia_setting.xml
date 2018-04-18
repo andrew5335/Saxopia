@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="0dp"
+    android:isScrollContainer="false"
+    android:padding="0dp"
+    android:orientation="vertical"
+    tools:context=".SaxopiaSettingActivity">
+
+    <LinearLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimaryDark"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center_vertical"
+            android:text="@string/saxopia_setting_title"
+            android:textAlignment="center"
+            android:textColor="@android:color/background_light"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="false"
+        android:layout_margin="0dp"
+        android:isScrollContainer="true"
+        android:orientation="vertical"
+        android:scrollbars="vertical">
+
+
+        <TextView
+            android:id="@+id/alarmSettingText"
+            android:background="#e0e0e1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:fontFamily="sans-serif-condensed"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:gravity="center_vertical"
+            android:text="  전체 알림 설정" />
+
+        <Switch
+            android:id="@+id/totalAlarm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:checked="false"
+            android:fontFamily="sans-serif-condensed"
+            android:text="색소피아 알림"
+            android:textSize="14dp" />
+
+        <Switch
+            android:id="@+id/newPostAlarm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:checked="false"
+            android:fontFamily="sans-serif-condensed"
+            android:text="새글 알림"
+            android:textSize="14dp" />
+
+        <Switch
+            android:id="@+id/replyAlarm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:checked="false"
+            android:fontFamily="sans-serif-condensed"
+            android:text="답글 알림"
+            android:textSize="14dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"></LinearLayout>
+
+        <TextView
+            android:id="@+id/alarmTimeText"
+            android:background="#e0e0e1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:fontFamily="sans-serif-condensed"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:gravity="center_vertical"
+            android:text="  알람 시간 설정 (기본 09시 ~ 20시)" />
+
+        <Switch
+            android:id="@+id/time08"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:checked="false"
+            android:fontFamily="sans-serif-condensed"
+            android:text="08시 ~ 20시"
+            android:textSize="14dp" />
+
+        <Switch
+            android:id="@+id/time10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:checked="false"
+            android:fontFamily="sans-serif-condensed"
+            android:text="10시 ~ 18시"
+            android:textSize="14dp" />
+
+        <Switch
+            android:id="@+id/time00"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:checked="false"
+            android:fontFamily="sans-serif-condensed"
+            android:text="00시 ~ 24시"
+            android:textSize="14dp" />
+    </LinearLayout>
+
+</LinearLayout>

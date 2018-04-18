@@ -23,24 +23,28 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
-        SharedPreferences sharedPreferences = this.getSharedPreferences("saxopia_setting", Context.MODE_PRIVATE);
-        boolean notiYn = false;
-        notiYn = sharedPreferences.getBoolean("saxopia_noti", false);
-        Log.i("Noti Info", "=======================Noti Info : " + notiYn);
+        //SharedPreferences sharedPreferences = this.getSharedPreferences("saxopia_setting", Context.MODE_PRIVATE);
+        //boolean notiYn = false;
+        //notiYn = sharedPreferences.getBoolean("totalAlarm", false);
+        //Log.i("Noti Info", "=======================Noti Info : " + notiYn);
         //추가한것
-        if(notiYn) {
+        //if(notiYn) {
             sendNotification(remoteMessage.getData().get("message"));
-        }
+        //}
     }
 
     private void sendNotification(String messageBody) {
         String link = "";
         String message = "";
+        String gu = "";
 
         try {
             JSONObject obj = new JSONObject(messageBody);
             link = obj.getString("link");
             message = obj.getString("message");
+            gu = obj.getString("gu");
+
+            Log.i("Gu", "==========gu : " + gu);
         }catch(Exception e){
             Log.e("Error", "Error : " + e.toString());
         }
@@ -69,7 +73,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         SharedPreferences sharedPreferences = this.getSharedPreferences("saxopia_setting", Context.MODE_PRIVATE);
         boolean notiYn = false;
-        notiYn = sharedPreferences.getBoolean("saxopia_noti", false);
+        notiYn = sharedPreferences.getBoolean("totalAlarm", false);
         Log.i("Noti Info2", "=======================Noti Info2 : " + notiYn);
 
         if(notiYn) {

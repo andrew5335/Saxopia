@@ -2,6 +2,8 @@
 
     <!-- A 'parent' preference, which enables/disables child preferences (below)
          when checked/unchecked. -->
+    <Preference
+        android:title="색소피아 알림 설정" />
     <SwitchPreference
         android:defaultValue="true"
         android:key="notifications_new_message"

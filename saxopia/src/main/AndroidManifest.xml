@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.saxophone.saxopia.community"
-    android:versionCode="12"
-    android:versionName="1.1.1">
+    android:versionCode="13"
+    android:versionName="1.1.2">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -15,19 +15,20 @@
 
     <application
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/icon2"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:hardwareAccelerated="true">
-        <activity android:name="com.saxophone.saxopia.community.SplashActivity">
+        android:theme="@style/AppTheme">
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.saxophone.saxopia.community.MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -47,12 +48,12 @@
             </intent-filter>
         </activity>
 
-        <service android:name="com.saxophone.saxopia.community.MyFirebaseMessagingService">
+        <service android:name=".MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name="com.saxophone.saxopia.community.MyFirebaseInstanceIDService">
+        <service android:name=".MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
@@ -74,8 +75,9 @@
             android:resource="@color/colorAccent" />
 
         <activity
-            android:name="com.saxophone.saxopia.community.SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings" />
+        <activity android:name=".SaxopiaSettingActivity"></activity>
     </application>
 
 </manifest>

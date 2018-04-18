@@ -417,7 +417,10 @@ public class MainActivity extends AppCompatActivity {
         }
          **/
 
+        /** 안드로이드 제공 기본 SettingsActivity 연결
         Intent settingIntent = new Intent(MainActivity.this, SettingsActivity.class);
+         **/
+        Intent settingIntent = new Intent(MainActivity.this, SaxopiaSettingActivity.class);
         startActivity(settingIntent);
 
     }
