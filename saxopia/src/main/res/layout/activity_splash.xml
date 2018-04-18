@@ -5,6 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/splash"
-    tools:context="com.saxophone.saxopia.community.com.saxophone.saxopia.SplashActivity">
+    tools:context="com.saxophone.saxopia.community.SplashActivity">
 
 </android.support.constraint.ConstraintLayout>

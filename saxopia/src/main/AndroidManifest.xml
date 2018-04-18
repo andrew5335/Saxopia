@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.saxophone.saxopia.community"
-    android:versionCode="7"
-    android:versionName="1.0.6">
+    android:versionCode="12"
+    android:versionName="1.1.1">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_SMS" />
 
     <uses-feature android:name="android.hardware.camera" />
 
@@ -18,14 +20,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:hardwareAccelerated="true">
-        <activity android:name=".SplashActivity">
+        <activity android:name="com.saxophone.saxopia.community.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"
+        <activity android:name="com.saxophone.saxopia.community.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -45,12 +47,12 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".MyFirebaseMessagingService">
+        <service android:name="com.saxophone.saxopia.community.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".MyFirebaseInstanceIDService">
+        <service android:name="com.saxophone.saxopia.community.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
@@ -72,7 +74,7 @@
             android:resource="@color/colorAccent" />
 
         <activity
-            android:name=".SettingsActivity"
+            android:name="com.saxophone.saxopia.community.SettingsActivity"
             android:label="@string/title_activity_settings"></activity>
     </application>
 

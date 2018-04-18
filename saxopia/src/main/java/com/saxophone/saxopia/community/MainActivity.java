@@ -1,15 +1,24 @@
 package com.saxophone.saxopia.community;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.NotificationManager;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Message;
+import android.preference.SwitchPreference;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -20,12 +29,10 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,10 +40,15 @@ import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.saxophone.saxopia.community.R;
+
 public class MainActivity extends AppCompatActivity {
-    private static final String URL_LOAD = "http://www.saxopia.com";
+    private static String URL_LOAD = "http://www.saxopia.com";
     private static final String TYPE_IMAGE = "*/*";
     private static final int INPUT_FILE_REQUEST_CODE = 1;
+
+    private static final int requestReadPhoneState = 999;
 
     private ValueCallback<Uri> mUploadMessage;
     private ValueCallback<Uri[]> mFilePathCallback;
@@ -65,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
         webView  = (WebView) findViewById(R.id.webview_);
         webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         //webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         webViewInterface = new WebViewInterface(MainActivity.this, webView);
         webView.addJavascriptInterface(webViewInterface, "saxopia");
@@ -76,8 +89,73 @@ public class MainActivity extends AppCompatActivity {
             // Hide the zoom controls for HONEYCOMB+
             webView.getSettings().setDisplayZoomControls(false);
         }
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.ICE_CREAM_SANDWICH)
             webView.getSettings().setTextZoom(100);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+            AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+
+            if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.READ_PHONE_STATE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        android.Manifest.permission.READ_PHONE_STATE)) {
+
+                    dialog.setTitle("권한 요청");
+                    dialog.setMessage("알림메시지 수신을 위해서는 전화 권한 허용이 필요합니다. 설정 -> 앱 -> 색소피아 -> 권한에서 전화 권한을 허용해주세요.");
+
+                    // 확인 버튼 설정
+                    dialog.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(Settings.ACTION_APPLICATION_SETTINGS);
+                            startActivityForResult(intent, 0);
+
+                            //dialog.dismiss();
+                        }
+                    });
+
+                    // 취소 버튼 설정
+                    dialog.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    dialog.show();
+                } else {
+
+                    dialog.setTitle("권한 허용 요청");
+                    dialog.setMessage("알림메시지 수신을 위해 전화 권한 허용이 필요합니다. 거부하셔도 앱 사용은 가능하지만 알림을 받지 못하게 됩니다.");
+                    dialog.setCancelable(true);
+
+                    dialog.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ActivityCompat.requestPermissions(MainActivity.this,
+                                    new String[]{android.Manifest.permission.READ_PHONE_STATE}, requestReadPhoneState);
+                        }
+                    });
+
+
+                    //dialog.setNegativeButton("거부", new DialogInterface.OnClickListener() {
+                    //    @Override
+                    //    public void onClick(DialogInterface dialog, int which) {
+                    //        //setResult(1);
+                    //        //dialog.dismiss();
+                    //        ActivityCompat.requestPermissions(MainActivity.this,
+                    //                new String[]{android.Manifest.permission.READ_PHONE_STATE}, 0);
+                    //    }
+                    //});
+
+
+                    dialog.show();
+
+                }
+
+            }
+        }
 
         final Activity activity = this;
 
@@ -225,10 +303,26 @@ public class MainActivity extends AppCompatActivity {
         //webView.setWebViewClient(new SaxopiaWebViewClient());
         //webView.setWebViewClient(new WebViewClient());
         webView.setWebViewClient(new SaxopiaClient());
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        String targetUrl = "";
+
+        if(bundle != null) {
+            if(bundle.getString("url") != null && !bundle.getString("url").equalsIgnoreCase("")) {
+                targetUrl = bundle.getString("url");
+            }
+        }
+
+        if(null != targetUrl && !"".equalsIgnoreCase(targetUrl)) {
+          URL_LOAD = URL_LOAD + targetUrl;
+        }
         webView.loadUrl(URL_LOAD);
 
         //if(commonUtil.cookieChk(URL_LOAD)) {
+        // Firebase FCM Message 수신 설정
             FirebaseMessaging.getInstance().subscribeToTopic("news");
+            //FirebaseMessaging.getInstance().subscribeToTopic("test");
             FirebaseInstanceId.getInstance().getToken();
         //}
 
@@ -312,14 +406,20 @@ public class MainActivity extends AppCompatActivity {
         //WebView mainWebView = (WebView) findViewById(R.id.webview_);
         //Toast.makeText(getApplicationContext(), "nav001", Toast.LENGTH_SHORT).show();
         //mainWebView.loadUrl("http://www.saxopia.com");
+
+        /**
         String curUrl = webView.getUrl();
-        if(curUrl.contains("http://www.saxopia.com/bbs_index.php?file1=member_list.html&file2=member_list.html") ||
-                curUrl.contains("http://saxopia.com/happy_message.php") ||
-                curUrl.contains("http://www.saxopia.com/happy_member_view.php")) {
+        if(curUrl.contains("bbs_index.php?file1=member_list.html&file2=member_list.html") ||
+                curUrl.contains("happy_message.php")) {
             webView.loadUrl("http://www.saxopia.com");
         } else {
             webView.loadUrl("javascript:showLayer('all_layer')");
         }
+         **/
+
+        Intent settingIntent = new Intent(MainActivity.this, SettingsActivity.class);
+        startActivity(settingIntent);
+
     }
 
     // 내글 버튼 - 내글 페이지 연결
@@ -462,4 +562,28 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case requestReadPhoneState: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(getApplicationContext(), "권한이 허용되었습니다.", Toast.LENGTH_LONG).show();
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "권한이 차단되었습니다.", Toast.LENGTH_LONG).show();
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
 }

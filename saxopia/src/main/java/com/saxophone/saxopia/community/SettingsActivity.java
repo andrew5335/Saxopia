@@ -3,7 +3,7 @@ package com.saxophone.saxopia.community;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
+import android.content.SharedPreferences;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -12,12 +12,17 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.SwitchPreference;
 import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.saxophone.saxopia.community.R;
 
 import java.util.List;
 
@@ -91,8 +96,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
      * example, 10" tablets are extra-large.
      */
     private static boolean isXLargeTablet(Context context) {
-        return (context.getResources().getConfiguration().screenLayout
-                & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_XLARGE;
+        //return (context.getResources().getConfiguration().screenLayout
+        //        & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_XLARGE;
+        return true;
     }
 
     /**
@@ -209,6 +215,31 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // updated to reflect the new value, per the Android Design
             // guidelines.
             bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
+
+            final SwitchPreference switchPreference = (SwitchPreference) findPreference("notifications_new_message");
+            final SharedPreferences sharedPreferences = getActivity().getSharedPreferences("saxopia_setting", Context.MODE_PRIVATE);
+
+            switchPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    if (!switchPreference.isChecked()) {
+                        Toast.makeText(getActivity(), "알림 수신 허용", Toast.LENGTH_LONG).show();
+                        switchPreference.setChecked(true);;
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putBoolean("saxopia_noti", true);
+                        editor.apply();
+                        Log.i("Noti", "==============saved noti : " + sharedPreferences.getBoolean("saxopia_noti", false));
+                    } else {
+                        Toast.makeText(getActivity(), "알림 수신 거부", Toast.LENGTH_LONG).show();
+                        switchPreference.setChecked(false);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putBoolean("saxopia_noti", false);
+                        editor.apply();
+                        Log.i("Noti", "==============saved noti : " + sharedPreferences.getBoolean("saxopia_noti", false));
+                    }
+                    return false;
+                }
+            });
         }
 
         @Override

@@ -1,5 +1,6 @@
 package com.saxophone.saxopia.community;
 
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -35,19 +36,30 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
         //if(commonUtil.cookieChk(URL_LOAD)) {
             // 생성등록된 토큰을 개인 앱서버에 보내 저장해 두었다가 추가 뭔가를 하고 싶으면 할 수 있도록 한다.
-            String userId = commonUtil.getCookieInfo(URL_LOAD);
-            //sendRegistrationToServer(token, userId);
-            sendRegistrationToServer(token);
+            String phoneNo = "";
+
+            try {
+                TelephonyManager telManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+                phoneNo = telManager.getLine1Number();
+                if (phoneNo.startsWith("+82")) {
+                    phoneNo = phoneNo.replace("+82", "0");
+                }
+            } catch(SecurityException e) {
+                Log.d("Error", "Error : " + e.toString());
+            }
+
+            //sendRegistrationToServer(token);
+            sendRegistrationToServer(token, phoneNo);
         //}
     }
 
-    private void sendRegistrationToServer(String token) {
+    private void sendRegistrationToServer(String token, String phoneNo) {
         // Add custom implementation, as needed.
 
         OkHttpClient client = new OkHttpClient();
         RequestBody body = new FormBody.Builder()
                 .add("token", token)
-                //.add("userId", userId)
+                .add("phoneNo", phoneNo)
                 .build();
 
         //request

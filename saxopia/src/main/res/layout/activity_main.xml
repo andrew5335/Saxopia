@@ -22,7 +22,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_centerInParent="true"
@@ -34,73 +34,66 @@
 
         <ImageButton
             android:id="@+id/btn_nav001"
-            android:layout_width="40dp"
-            android:layout_height="30dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
             android:background="@mipmap/btn001"
-            android:onClick="onNav001Clicked"
-            android:scaleType="fitXY"
-            android:src="@mipmap/btn001" />
+            android:onClick="onNav001Clicked" />
 
         <ImageButton
             android:id="@+id/btn_nav002"
-            android:layout_width="51dp"
-            android:layout_height="30dp"
+            android:layout_width="50dp"
+            android:layout_height="35dp"
             android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
             android:background="@mipmap/btn002"
-            android:onClick="onNav002Clicked"
-            android:scaleType="fitXY"
-            android:src="@mipmap/btn002" />
+            android:onClick="onNav002Clicked" />
 
         <ImageButton
             android:id="@+id/btn_nav003"
-            android:layout_width="51dp"
-            android:layout_height="30dp"
+            android:layout_width="50dp"
+            android:layout_height="35dp"
             android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
             android:background="@mipmap/btn003"
-            android:onClick="onNav003Clicked"
-            android:scaleType="fitXY"
-            android:src="@mipmap/btn003" />
+            android:onClick="onNav003Clicked" />
 
         <ImageButton
             android:id="@+id/btn_nav004"
-            android:layout_width="51dp"
-            android:layout_height="30dp"
+            android:layout_width="50dp"
+            android:layout_height="35dp"
             android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
             android:background="@mipmap/btn004"
-            android:onClick="onNav004Clicked"
-            android:scaleType="fitXY"
-            android:src="@mipmap/btn004" />
+            android:onClick="onNav004Clicked" />
 
         <ImageButton
             android:id="@+id/btn_nav005"
-            android:layout_width="51dp"
-            android:layout_height="30dp"
+            android:layout_width="50dp"
+            android:layout_height="35dp"
             android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
             android:background="@mipmap/btn005"
-            android:onClick="onNav005Clicked"
-            android:scaleType="fitXY"
-            android:src="@mipmap/btn005" />
+            android:onClick="onNav005Clicked" />
 
         <ImageButton
             android:id="@+id/btn_nav006"
-            android:layout_width="51dp"
-            android:layout_height="30dp"
+            android:layout_width="50dp"
+            android:layout_height="35dp"
             android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
             android:background="@mipmap/btn006"
-            android:onClick="onNav006Clicked"
-            android:scaleType="fitXY"
-            android:src="@mipmap/btn006" />
+            android:onClick="onNav006Clicked" />
 
         <ImageButton
             android:id="@+id/btn_nav007"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_width="55dp"
+            android:layout_height="35dp"
             android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
             android:background="@mipmap/btn007"
-            android:onClick="onNav007Clicked"
-            android:scaleType="fitXY"
-            android:src="@mipmap/btn007" />
+            android:onClick="onNav007Clicked" />
 
     </LinearLayout>
 
@@ -109,5 +102,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/background_dark"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:orientation="horizontal" />
 </RelativeLayout>
