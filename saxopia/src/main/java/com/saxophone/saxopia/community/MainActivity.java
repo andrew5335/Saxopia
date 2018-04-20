@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                         android.Manifest.permission.READ_PHONE_STATE)) {
 
                     dialog.setTitle("권한 요청");
-                    dialog.setMessage("알림메시지 수신을 위해서는 전화 권한 허용이 필요합니다. 설정 -> 앱 -> 색소피아 -> 권한에서 전화 권한을 허용해주세요.");
+                    dialog.setMessage("색소피아 밴드스토리 알림설정을 위한 전화 권한 허용이 필요합니다. 확인해주세요.");
 
                     // 확인 버튼 설정
                     dialog.setPositiveButton("확인", new DialogInterface.OnClickListener() {
@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
 
                     dialog.setTitle("권한 허용 요청");
-                    dialog.setMessage("알림메시지 수신을 위해 전화 권한 허용이 필요합니다. 거부하셔도 앱 사용은 가능하지만 알림을 받지 못하게 됩니다.");
+                    dialog.setMessage("색소피아 밴드스토리 알림설정을 위한 전화 권한 허용이 필요합니다. 확인해주세요.");
                     dialog.setCancelable(true);
 
                     dialog.setPositiveButton("확인", new DialogInterface.OnClickListener() {
