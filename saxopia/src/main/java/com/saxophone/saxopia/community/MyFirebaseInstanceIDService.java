@@ -53,7 +53,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
         //}
     }
 
-    private void sendRegistrationToServer(String token, String phoneNo) {
+    public void sendRegistrationToServer(String token, String phoneNo) {
         // Add custom implementation, as needed.
 
         OkHttpClient client = new OkHttpClient();
