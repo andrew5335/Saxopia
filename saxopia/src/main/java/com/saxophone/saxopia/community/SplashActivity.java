@@ -27,9 +27,9 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        //FirebaseMessaging.getInstance().subscribeToTopic("news");
+        FirebaseMessaging.getInstance().subscribeToTopic("news");
         //FirebaseMessaging.getInstance().subscribeToTopic("test");
-        //FirebaseInstanceId.getInstance().getToken();
+        FirebaseInstanceId.getInstance().getToken();
 
         new Handler().postDelayed(new Runnable() {
             @Override
