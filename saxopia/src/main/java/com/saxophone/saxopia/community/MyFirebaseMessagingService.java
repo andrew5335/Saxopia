@@ -28,44 +28,35 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     // [START receive_message]
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-
-        //SharedPreferences sharedPreferences = this.getSharedPreferences("saxopia_setting", Context.MODE_PRIVATE);
-        //boolean notiYn = false;
-        //notiYn = sharedPreferences.getBoolean("totalAlarm", false);
-        //Log.i("Noti Info", "=======================Noti Info : " + notiYn);
-        //추가한것
-        //if(notiYn) {
-            sendNotification(remoteMessage.getData().get("message"));
-        //}
+        sendNotification(remoteMessage.getData().get("message"));
     }
 
     private void sendNotification(String messageBody) {
         String link = "";
         String message = "";
         String gu = "";
+        //Intent intent = new Intent(this, MainActivity.class);
 
         try {
             JSONObject obj = new JSONObject(messageBody);
             link = obj.getString("link");
             message = obj.getString("message");
             gu = obj.getString("gu");
-
-            Log.i("Gu", "==========gu : " + gu);
         }catch(Exception e){
             Log.e("Error", "Error : " + e.toString());
         }
 
-        Intent intent = new Intent(this, MainActivity.class);
 
-        if(null != link && !"".equalsIgnoreCase(link)) {
+        //if(null != link && !"".equalsIgnoreCase(link)) {
+            Intent intent = new Intent(this, MainActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString("url", link);
             intent.putExtras(bundle);
-        }
+        //}
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-                PendingIntent.FLAG_ONE_SHOT);
+                PendingIntent.FLAG_UPDATE_CURRENT);
 
         Bitmap bm = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
         int icon = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ? R.mipmap.saxopia_font : R.mipmap.saxopia_font;
