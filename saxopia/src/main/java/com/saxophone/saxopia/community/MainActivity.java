@@ -3,8 +3,10 @@ package com.saxophone.saxopia.community;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -35,9 +37,17 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -75,6 +85,33 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().permitAll().build());
+
+        final SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("saxopia_setting", Context.MODE_PRIVATE);
+        boolean totalAlarmYn = true;
+        boolean newPostAlarmYn = true;
+        boolean replyAlarmYn = true;
+        boolean messageAlarmYn = true;
+        boolean time00Yn = true;
+        boolean time08Yn = true;
+        boolean time10Yn = true;
+
+        boolean isFirst = sharedPreferences.getBoolean("isFirst", false);
+        if(!isFirst) {
+            // 최초 실행인 경우 최초 실행 유무값을 true로 저장한다. 이렇게 하면 이후부터는 이 부분을 확인하지 않으므로...
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("isFirst", true);
+
+            // 최초 실행인 경우 앱을 알림을 받을 수 있는 상태로 만들어준다.
+            editor.putBoolean("totalAlarm", true);
+            editor.putBoolean("newPost", true);
+            editor.putBoolean("replyPost", true);
+            editor.putBoolean("message", true);
+            editor.putBoolean("time00", false);
+            editor.putBoolean("time08", false);
+            editor.putBoolean("time10", false);
+
+            editor.commit();
+        }
 
         customViewContainer = (LinearLayout) findViewById(R.id.customViewContainer);
         customViewContainer.setOrientation(LinearLayout.VERTICAL);
@@ -594,7 +631,25 @@ public class MainActivity extends AppCompatActivity {
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
                     // 권한이 허용되면 토큰 및 전화번호를 저장한다.
-                    getPhoneNoAndSaveToken();
+                    try {
+                        getPhoneNoAndSaveToken();
+                    } catch(SecurityException e) {
+                        Log.d("Error", "Error : " + e.toString());
+                    } catch(UnsupportedEncodingException ue) {
+                        Log.d("Error", "Error : " + ue.toString());
+                    } catch(NoSuchPaddingException nspe) {
+                        Log.d("Error", "Error : " + nspe.toString());
+                    } catch(NoSuchAlgorithmException nsae) {
+                        Log.d("Error", "Error : " + nsae.toString());
+                    } catch(InvalidAlgorithmParameterException iape) {
+                        Log.d("Error", "Error : " + iape.toString());
+                    } catch(InvalidKeyException ike) {
+                        Log.d("Error", "Error : " + ike.toString());
+                    } catch(IllegalBlockSizeException ibe) {
+                        Log.d("Error", "Error : " + ibe.toString());
+                    } catch(BadPaddingException be) {
+                        Log.d("Error", "Error : " + be.toString());
+                    }
 
                 } else {
                     Toast.makeText(getApplicationContext(), "권한이 차단되었습니다.", Toast.LENGTH_LONG).show();
@@ -610,13 +665,19 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void getPhoneNoAndSaveToken() {
+    public void getPhoneNoAndSaveToken() throws UnsupportedEncodingException
+            , NoSuchPaddingException
+            , NoSuchAlgorithmException
+            , InvalidAlgorithmParameterException
+            , InvalidKeyException
+            , IllegalBlockSizeException
+            , BadPaddingException {
         String phoneNo = "";
 
         try {
             TelephonyManager telManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
             phoneNo = telManager.getLine1Number();
-            Log.i("phone No", "=====================Phone No : " + phoneNo);
+
             if (phoneNo.startsWith("+82")) {
                 phoneNo = phoneNo.replace("+82", "0");
             }
@@ -627,6 +688,7 @@ public class MainActivity extends AppCompatActivity {
         String token = "";
         if(phoneNo != null && !"".equalsIgnoreCase(phoneNo)) {
             token = FirebaseInstanceId.getInstance().getToken();
+            phoneNo = AES256Chiper.AES_Encode(phoneNo);
         }
         //sendRegistrationToServer(token);
         sendRegistrationToServer(token, phoneNo);
@@ -643,7 +705,7 @@ public class MainActivity extends AppCompatActivity {
 
         //request
         Request request = new Request.Builder()
-                .url("http://www.saxopia.com/fcm/register.php")
+                .url("http://www.saxopia.com/fcm/register2.php")
                 .post(body)
                 .build();
 

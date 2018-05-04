@@ -8,6 +8,14 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -44,8 +52,25 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
                 if (phoneNo.startsWith("+82")) {
                     phoneNo = phoneNo.replace("+82", "0");
                 }
+
+                phoneNo = AES256Chiper.AES_Encode(phoneNo);
+                Log.i("phoneno", "===============Phone No : " + phoneNo);
             } catch(SecurityException e) {
                 Log.d("Error", "Error : " + e.toString());
+            } catch(UnsupportedEncodingException ue) {
+                Log.d("Error", "Error : " + ue.toString());
+            } catch(NoSuchPaddingException nspe) {
+                Log.d("Error", "Error : " + nspe.toString());
+            } catch(NoSuchAlgorithmException nsae) {
+                Log.d("Error", "Error : " + nsae.toString());
+            } catch(InvalidAlgorithmParameterException iape) {
+                Log.d("Error", "Error : " + iape.toString());
+            } catch(InvalidKeyException ike) {
+                Log.d("Error", "Error : " + ike.toString());
+            } catch(IllegalBlockSizeException ibe) {
+                Log.d("Error", "Error : " + ibe.toString());
+            } catch(BadPaddingException be) {
+                Log.d("Error", "Error : " + be.toString());
             }
 
             //sendRegistrationToServer(token);
@@ -64,7 +89,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
         //request
         Request request = new Request.Builder()
-                .url("http://www.saxopia.com/fcm/register.php")
+                .url("http://www.saxopia.com/fcm/register2.php")
                 .post(body)
                 .build();
 

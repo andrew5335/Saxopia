@@ -59,7 +59,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
         Bitmap bm = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
-        int icon = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ? R.mipmap.saxopia_font : R.mipmap.saxopia_font;
+        int icon = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ? R.mipmap.saxopia_icon2 : R.mipmap.saxopia_icon2;
 
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
@@ -118,6 +118,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                             notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
                         }
 
+                        if(replyPost && gu.equalsIgnoreCase("comment")) {
+                            notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+                        }
+
                         if(messageYn && gu.equalsIgnoreCase("message")) {
                             notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
                         }
@@ -132,6 +136,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
                         // 전 시간대 허용으로 되어 있을 경우, 답글이면서 답글 알림 수신이 허용되어 있을 경우
                         if(replyPost && (gu.equalsIgnoreCase("reply") || gu.equalsIgnoreCase("comment"))) {
+                            notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+                        }
+
+                        if(replyPost && gu.equalsIgnoreCase("comment")) {
                             notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
                         }
 
@@ -150,6 +158,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                                     notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
                                 }
 
+                                if(replyPost && gu.equalsIgnoreCase("comment")) {
+                                    notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+                                }
+
                                 if(messageYn && gu.equalsIgnoreCase("message")) {
                                     notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
                                 }
@@ -161,6 +173,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                                 }
 
                                 if(replyPost && (gu.equalsIgnoreCase("reply") || gu.equalsIgnoreCase("comment"))) {
+                                    notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+                                }
+
+                                if(replyPost && gu.equalsIgnoreCase("comment")) {
                                     notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
                                 }
 

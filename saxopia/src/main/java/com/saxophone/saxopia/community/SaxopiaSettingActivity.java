@@ -94,6 +94,9 @@ public class SaxopiaSettingActivity extends AppCompatActivity {
             editor.putBoolean("newPost", true);
             editor.putBoolean("replyPost", true);
             editor.putBoolean("message", true);
+            editor.putBoolean("time00", false);
+            editor.putBoolean("time08", false);
+            editor.putBoolean("time10", false);
 
             editor.commit();
         }
